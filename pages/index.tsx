@@ -3,9 +3,15 @@ import Image from 'next/image';
 import { Inter } from '@next/font/google';
 import styles from '../styles/Home.module.css';
 
+import Clock from '../components/clock.tsx';
+import Weather from '../components/weather.tsx';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
+    let lon = '108.316673';
+    let lat = '22.816669';
+
     return (
         <>
             <Head>
@@ -15,7 +21,8 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className={styles.main}>
-                <h1 className="text-3xl font-bold underline">Hello world!123</h1>
+                <Clock />
+                <Weather lat={lat} lon={lon} apiKey={'9f940550c293ed46ff4097e74d6a9c61'} />
             </main>
         </>
     );
