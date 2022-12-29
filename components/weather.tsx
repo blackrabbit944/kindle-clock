@@ -1,8 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function Weather({ lat, lon, apiKey }) {
-    const [weather, setWeather] = useState(null);
-    const [error, setError] = useState(null);
+interface WeatherProps {
+    lat: number | string;
+    lon: number | string;
+    apiKey: string;
+}
+
+const Weather: React.FC<WeatherProps> = ({ lat, lon, apiKey }) => {
+    interface weatherState {
+        name: string;
+        weather: any[];
+        main: any;
+    }
+
+    const [weather, setWeather] = useState<null | weatherState>(null);
+    const [error, setError] = useState<null | { message: string }>(null);
     const [loading, setLoading] = useState(true);
 
     //使用openweatherapi来查询天气
@@ -32,20 +44,21 @@ export default function Weather({ lat, lon, apiKey }) {
     } else {
         return (
             <div>
-                <div className="text-center text-2xl capitalize">{weather.name}</div>
+                <div className="text-center text-2xl capitalize">{weather?.name}</div>
                 <div className="flex justify-between">
                     <div className="mr-8">
                         <img
-                            src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`}
+                            src={`https://openweathermap.org/img/wn/${weather?.weather[0].icon}.png`}
                             className="w-32"
                         />
                     </div>
                     <div className="text-3xl font-teko flex flex-col justify-center items-start">
-                        <div className="weather-temp">{Math.round(weather.main.temp)}°C</div>
-                        <div className="weather-temp">{weather.weather[0]['main']}</div>
+                        <div className="weather-temp">{Math.round(weather?.main.temp)}°C</div>
+                        <div className="weather-temp">{weather?.weather[0]['main']}</div>
                     </div>
                 </div>
             </div>
         );
     }
-}
+};
+export default Weather;

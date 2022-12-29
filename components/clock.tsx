@@ -1,15 +1,14 @@
 import dayjs from 'dayjs';
 
-export default function Clock({}) {
-    let now = dayjs();
-
-    let date = now.format('DD/MM/YYYY');
-    let timer = now.format('HH:mm');
-
+const Clock: React.FC = () => {
+    const now = dayjs();
+    const date = now.format('DD/MM/YYYY');
+    const timer = now.format('HH:mm');
     return (
         <div>
             <div className="clock-font timer text-center">{timer}</div>
             <div className="clock-font dater text-center">{date}</div>
         </div>
     );
-}
+};
+export default Clock;

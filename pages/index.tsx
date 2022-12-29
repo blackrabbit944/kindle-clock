@@ -1,16 +1,12 @@
 import Head from 'next/head';
-import Image from 'next/image';
-import { Inter } from '@next/font/google';
+
+import Clock from '../components/clock';
+import Weather from '../components/weather';
 import styles from '../styles/Home.module.css';
 
-import Clock from '../components/clock.tsx';
-import Weather from '../components/weather.tsx';
-
-const inter = Inter({ subsets: ['latin'] });
-
 export default function Home() {
-    let lon = '108.316673';
-    let lat = '22.816669';
+    const lon = '108.316673';
+    const lat = '22.816669';
 
     return (
         <>
