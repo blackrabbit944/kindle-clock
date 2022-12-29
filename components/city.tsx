@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
-import { setCache, getCache } from 'helper/local';
-import { getCityPropsType, getCity, CityOnePropsType } from 'helper/hefeng';
 import Modal from 'components/common/modal';
+import { CityOnePropsType, getCity } from 'helper/hefeng';
+import { getCache, setCache } from 'helper/local';
+import { useEffect, useState } from 'react';
 
 interface CityProps {
-    location: string;
     setCityId: (city_id: string) => void;
 }
 
@@ -14,9 +13,9 @@ interface CityOneInterface {
 }
 
 const City: React.FC<CityProps> = (props) => {
-    let { location, setCityId } = props;
+    const { setCityId } = props;
 
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [kw, setKw] = useState<string>('');
     const [cityList, setCityList] = useState<CityOnePropsType[]>([]);
 
@@ -48,7 +47,7 @@ const City: React.FC<CityProps> = (props) => {
         if (!name) {
             return null;
         }
-        let data = await getCity({
+        const data = await getCity({
             location: name
         });
 

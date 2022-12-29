@@ -8,11 +8,15 @@ enum LanguageType {
     EN = 'en'
 }
 
+interface Map {
+    [key: string]: string;
+}
 //拼接get参数
-const getApiUrl = (api_url_base: string, params: object) => {
-    let paramsArray = [];
+const getApiUrl = (api_url_base: string, params: Map) => {
+    let paramsArray: string[] = [];
     //拼接参数
-    Object.keys(params).forEach((key) => paramsArray.push(key + '=' + params[key]));
+    Object.keys(params).forEach((key: string) => paramsArray.push(key + '=' + params[key]));
+
     if (api_url_base.search(/\?/) === -1) {
         api_url_base += '?' + paramsArray.join('&');
     } else {
@@ -22,7 +26,7 @@ const getApiUrl = (api_url_base: string, params: object) => {
 };
 
 export interface getNowWeatherPropsType {
-    location: string | number;
+    location: string;
     lang?: string;
     unit?: UnitType;
 }
@@ -56,7 +60,7 @@ export interface CityOnePropsType {
     adm1?: string;
 }
 
-export const getCity = async (props: getCityPropsType): CityOnePropsType[] => {
+export const getCity = async (props: getCityPropsType): Promise<CityOnePropsType[]> => {
     const { location } = props;
 
     let result = await fetch(
@@ -68,17 +72,21 @@ export const getCity = async (props: getCityPropsType): CityOnePropsType[] => {
 
     let data = await result.json();
 
-    let citys = [];
+    let citys: CityOnePropsType[] = [];
     if (data.location) {
-        data.location.map((locationone) => {
-            city = {
-                location: locationone.id,
-                name: locationone.name,
-                adm1: locationone.adm1,
-                adm2: locationone.adm2
-            };
-            citys.push(city);
-        });
+        // await Promise.all(
+        data.location.map(
+            (locationone: { id: string; name: string; adm1: string; adm2: string }) => {
+                let city: CityOnePropsType = {
+                    location: locationone.id,
+                    name: locationone.name,
+                    adm1: locationone.adm1,
+                    adm2: locationone.adm2
+                };
+                citys.push(city);
+            }
+        );
+        // );
     }
     console.log('citys', citys);
 
@@ -86,7 +94,7 @@ export const getCity = async (props: getCityPropsType): CityOnePropsType[] => {
 };
 
 export interface get7DayWeatherPropsType {
-    location: string | number;
+    location: string;
     lang?: string;
     unit?: UnitType;
 }

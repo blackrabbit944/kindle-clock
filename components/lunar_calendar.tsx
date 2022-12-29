@@ -1,16 +1,16 @@
-import { Solar, Lunar, HolidayUtil } from 'lunar-javascript';
+import { Lunar } from 'lunar-javascript';
 
 const LunarCalendar: React.FC = () => {
-    let d = Lunar.fromDate(new Date());
+    const d = Lunar.fromDate(new Date());
 
-    let ly = d.getYearInChinese();
-    let lm = d.getMonthInChinese();
-    let ld = d.getDayInChinese();
+    // const ly = d.getYearInChinese();
+    const lm = d.getMonthInChinese();
+    const ld = d.getDayInChinese();
 
-    let ljieqi = d.getJieQi();
-    let lfestival = d.getFestivals();
+    const ljieqi = d.getJieQi();
+    const lfestival = d.getFestivals();
 
-    let MAX_COUNT = 9;
+    const MAX_COUNT = 9;
 
     // 宜
     let yi_list = d.getDayYi();

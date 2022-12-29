@@ -1,17 +1,19 @@
-import Head from 'next/head';
-
-import Clock from '../components/clock';
 import WeatherIn7Days from 'components/weather_list';
-import LunarCalendar from '../components/lunar_calendar';
-import City from '../components/city';
+import Head from 'next/head';
 import { useState } from 'react';
 
+import City from '../components/city';
+import Clock from '../components/clock';
+import LunarCalendar from '../components/lunar_calendar';
+
 export default function Home() {
-    let [cityId, setCityId] = useState<string | number>('');
+    const [cityId, setCityId] = useState<string>('');
 
     return (
         <>
-            <Head></Head>
+            <Head>
+                <title>Kindle Clock</title>
+            </Head>
             <main>
                 <div className="p-8">
                     <div className="flex justify-between items-center gap-8">

@@ -6,7 +6,8 @@ module.exports = {
     extends: [
         'eslint:recommended',
         'plugin:react/recommended',
-        'plugin:@typescript-eslint/recommended'
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@next/next/recommended'
     ],
     overrides: [],
     parser: '@typescript-eslint/parser',
@@ -31,7 +32,9 @@ module.exports = {
         'simple-import-sort/exports': 'warn',
         'react/react-in-jsx-scope': 'off',
         'react/prop-types': 'off',
-        'react/no-unescaped-entities': 0
+        'react/no-unescaped-entities': 0,
+        '@next/next/no-img-element': 'off',
+        '@typescript-eslint/no-explicit-any': 'off'
     },
     settings: {
         react: {

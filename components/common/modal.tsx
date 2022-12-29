@@ -1,16 +1,14 @@
-import React from 'react';
-
 import { XMarkIcon } from '@heroicons/react/24/solid';
+import React from 'react';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#__next');
 
 export interface ModalProps {
-    visible?: Boolean;
+    visible?: boolean;
     onClose?: () => void;
     children: React.ReactNode;
     closeIcon?: React.ReactNode;
-    loading?: Boolean;
     style?: React.CSSProperties;
     width?: string | number;
     title: string;
@@ -22,7 +20,6 @@ const ModalComponent: React.FC<ModalProps> = (props) => {
         title = '',
         onClose,
         closeIcon = <XMarkIcon className="w-6 h-6" />,
-        loading,
         style,
         width
     } = props;

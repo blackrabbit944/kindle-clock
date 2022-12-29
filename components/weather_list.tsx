@@ -1,14 +1,24 @@
-import { useEffect, useState } from 'react';
-import { get7DayWeather, get7DayWeatherPropsType } from 'helper/hefeng';
 import classNames from 'classnames';
+import { get7DayWeather } from 'helper/hefeng';
+import { useEffect, useState } from 'react';
+
 import Weather from '../components/weather';
 
 interface WeatherIn7DaysProps {
-    cityId: string | number;
+    cityId: string;
+}
+
+interface DailyOneProps {
+    iconDay: string;
+    textDay: string;
+    textNight: string;
+    tempMin: number;
+    tempMax: number;
+    fxDate: string;
 }
 
 interface DailyWeatherProps {
-    weather: object;
+    weather: DailyOneProps;
 }
 
 const DailyWeather: React.FC<DailyWeatherProps> = ({ weather }) => {
@@ -17,7 +27,10 @@ const DailyWeather: React.FC<DailyWeatherProps> = ({ weather }) => {
         <div>
             <div className="">
                 <div className="text-center">
-                    <i class={classNames('qi-' + weather.iconDay)} style={{ fontSize: '5rem' }}></i>
+                    <i
+                        className={classNames('qi-' + weather.iconDay)}
+                        style={{ fontSize: '5rem' }}
+                    ></i>
                 </div>
                 <div className=" font-teko text-center">
                     <div className="text-base">
@@ -35,7 +48,7 @@ const DailyWeather: React.FC<DailyWeatherProps> = ({ weather }) => {
 };
 
 const WeatherIn7Days: React.FC<WeatherIn7DaysProps> = ({ cityId }) => {
-    const [weatherList, setWeatherList] = useState<object[]>([]);
+    const [weatherList, setWeatherList] = useState<DailyOneProps[]>([]);
     const [error, setError] = useState<null | { message: string }>(null);
     const [loading, setLoading] = useState(true);
 
@@ -44,11 +57,9 @@ const WeatherIn7Days: React.FC<WeatherIn7DaysProps> = ({ cityId }) => {
         if (!cityId) {
             return;
         }
-        get7DayWeather(
-            {
-                location: cityId
-            }<get7DayWeatherPropsType>
-        )
+        get7DayWeather({
+            location: cityId
+        })
             .then((weather_data) => {
                 console.log('weather_data2', weather_data);
                 setWeatherList(weather_data.daily);
@@ -73,7 +84,7 @@ const WeatherIn7Days: React.FC<WeatherIn7DaysProps> = ({ cityId }) => {
         return (
             <div className="flex justify-between flex-grow">
                 <Weather cityId={cityId} />
-                {weatherList.map((weatherone, index) => {
+                {weatherList.map((weatherone: DailyOneProps) => {
                     return <DailyWeather key={weatherone.fxDate} weather={weatherone} />;
                 })}
             </div>

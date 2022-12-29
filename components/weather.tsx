@@ -1,13 +1,17 @@
-import { useEffect, useState } from 'react';
-import { getNowWeather, getNowWeatherPropsType } from 'helper/hefeng';
 import classNames from 'classnames';
+import { getNowWeather } from 'helper/hefeng';
+import { useEffect, useState } from 'react';
 
 interface WeatherProps {
-    cityId: string | number;
+    cityId: string;
 }
 const Weather: React.FC<WeatherProps> = ({ cityId }) => {
-    const [weather, setWeather] = useState<{ icon?: string }>({
-        icon: ''
+    const [weather, setWeather] = useState<{
+        icon?: string;
+        text?: string;
+        temp?: number;
+    }>({
+        temp: 0
     });
     const [error, setError] = useState<null | { message: string }>(null);
     const [loading, setLoading] = useState(true);
@@ -50,8 +54,8 @@ const Weather: React.FC<WeatherProps> = ({ cityId }) => {
                     ></i>
                 </div>
                 <div className=" font-teko text-center">
-                    <div className="text-base">{weather?.text}</div>
-                    <div className="text-3xl">{Math.round(weather?.temp)}°C</div>
+                    <div className="text-base">{weather.text}</div>
+                    <div className="text-3xl">{weather.temp}°C</div>
                 </div>
             </div>
         );
