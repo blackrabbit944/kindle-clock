@@ -1,39 +1,38 @@
 import { useEffect, useState } from 'react';
+import { getNowWeather, getNowWeatherPropsType } from 'helper/hefeng';
+import classNames from 'classnames';
 
 interface WeatherProps {
-    lat: number | string;
-    lon: number | string;
-    apiKey: string;
+    cityId: string | number;
 }
-
-const Weather: React.FC<WeatherProps> = ({ lat, lon, apiKey }) => {
-    interface weatherState {
-        name: string;
-        weather: any[];
-        main: any;
-    }
-
-    const [weather, setWeather] = useState<null | weatherState>(null);
+const Weather: React.FC<WeatherProps> = ({ cityId }) => {
+    const [weather, setWeather] = useState<{ icon?: string }>({
+        icon: ''
+    });
     const [error, setError] = useState<null | { message: string }>(null);
     const [loading, setLoading] = useState(true);
 
     //使用openweatherapi来查询天气
     useEffect(() => {
-        fetch(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
-        )
-            .then((res) => res.json())
-            .then(
-                (result) => {
-                    setWeather(result);
-                    setLoading(false);
-                },
-                (error) => {
-                    setError(error);
-                    setLoading(false);
-                }
-            );
-    }, [lat, lon, apiKey]);
+        if (!cityId) {
+            return;
+        }
+        getNowWeather({
+            location: cityId
+        })
+            .then((weather_data) => {
+                console.log('weather_data', weather_data);
+                setWeather(weather_data.now);
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.log('err', err);
+                setError({
+                    message: 'API请求出错'
+                });
+                setLoading(false);
+            });
+    }, [cityId]);
 
     console.log('weather', weather);
 
@@ -43,19 +42,16 @@ const Weather: React.FC<WeatherProps> = ({ lat, lon, apiKey }) => {
         return <div>Loading...</div>;
     } else {
         return (
-            <div>
-                <div className="text-center text-2xl capitalize">{weather?.name}</div>
-                <div className="flex justify-between">
-                    <div className="mr-8">
-                        <img
-                            src={`https://openweathermap.org/img/wn/${weather?.weather[0].icon}.png`}
-                            className="w-32"
-                        />
-                    </div>
-                    <div className="text-3xl font-teko flex flex-col justify-center items-start">
-                        <div className="weather-temp">{Math.round(weather?.main.temp)}°C</div>
-                        <div className="weather-temp">{weather?.weather[0]['main']}</div>
-                    </div>
+            <div className="bg-black px-8 text-white">
+                <div className="text-center">
+                    <i
+                        className={classNames('qi-' + weather.icon)}
+                        style={{ fontSize: '5rem' }}
+                    ></i>
+                </div>
+                <div className=" font-teko text-center">
+                    <div className="text-base">{weather?.text}</div>
+                    <div className="text-3xl">{Math.round(weather?.temp)}°C</div>
                 </div>
             </div>
         );

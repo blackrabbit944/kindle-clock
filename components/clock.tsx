@@ -5,7 +5,7 @@ const Clock: React.FC = () => {
     const date = now.format('DD/MM/YYYY');
     const timer = now.format('HH:mm');
     return (
-        <div>
+        <div className="flex-grow">
             <div className="clock-font timer text-center">{timer}</div>
             <div className="clock-font dater text-center">{date}</div>
         </div>

@@ -64,9 +64,44 @@
 
 .timer {
     font-size: 10rem;
-    height: 10rem;
+    height: 8rem;
+    line-height: 1;
 }
 .dater {
     font-family: 'Teko';
-    font-size: 5rem;
+    @apply text-3xl;
+}
+.btn {
+    @apply px-4 py-1 rounded-md text-base h-9;
+}
+.btn-primary {
+    @apply bg-gray-700 text-white;
+}
+
+/*modal相关*/
+.ReactModal__Body--open,
+.ReactModal__Html--open {
+    overflow: hidden;
+}
+.ReactModal__Content {
+    @apply bg-white  shadow-xl rounded-xl border-2 border-gray-600 p-4 md:p-6;
+    min-width: 500px;
+    min-height: 400px;
+    max-width: 90%;
+}
+.modal-close-btn {
+    @apply absolute right-0 top-0 p-6 cursor-pointer;
+}
+
+.ReactModal__Overlay {
+    @apply opacity-0 overflow-y-auto overflow-x-hidden;
+    transition: opacity 200ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+    opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+    opacity: 0;
 }
